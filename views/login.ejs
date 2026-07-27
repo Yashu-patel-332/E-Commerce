@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Cartora</title>
+    <link rel="stylesheet" href="/stylesheets/style.css">
+</head>
+<body>
+    <main class="single-auth-page">
+        <nav class="auth-nav">
+            <a class="brand" href="/">Cartora</a>
+            <div class="topbar-links">
+                <a class="nav-link" href="/shop">Shop</a>
+                <a class="nav-link" href="/register">Register</a>
+            </div>
+        </nav>
+
+        <section class="single-auth-panel">
+            <% if (error) { %>
+                <div class="alert alert-error"><%= error %></div>
+            <% } %>
+            <% if (success) { %>
+                <div class="alert alert-success"><%= success %></div>
+            <% } %>
+
+            <form class="form-card auth-form" action="/users/login" method="post">
+                <div>
+                    <p class="eyebrow">Welcome back</p>
+                    <h1>Login</h1>
+                </div>
+                <label>
+                    Email
+                    <input type="email" name="email" placeholder="you@example.com" required>
+                </label>
+                <label>
+                    Password
+                    <input type="password" name="password" placeholder="Your password" required>
+                </label>
+                <button type="submit">Login</button>
+                <p class="auth-switch">New customer? <a href="/register">Create an account</a></p>
+            </form>
+        </section>
+    </main>
+</body>
+</html>

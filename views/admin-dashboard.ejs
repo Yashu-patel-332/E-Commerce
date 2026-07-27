@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | Cartora</title>
+    <link rel="stylesheet" href="/stylesheets/style.css">
+</head>
+<body>
+    <header class="market-header">
+        <a class="brand" href="/dashboard">Cartora</a>
+        <form class="search-bar" action="/shop" method="get">
+            <input type="search" placeholder="Search products" aria-label="Search products">
+            <button type="submit">Search</button>
+        </form>
+        <nav>
+            <a href="/dashboard">Admin</a>
+            <a href="/shop">Shop</a>
+            <a href="/products/create">Add Product</a>
+            <a href="/users/logout">Logout</a>
+        </nav>
+    </header>
+
+    <main class="dashboard-shell">
+        <% if (error) { %><div class="alert alert-error"><%= error %></div><% } %>
+        <% if (success) { %><div class="alert alert-success"><%= success %></div><% } %>
+
+        <section class="dashboard-hero admin-hero">
+            <div>
+                <p class="eyebrow">Admin dashboard</p>
+                <h1>Manage catalog, prices, and product availability.</h1>
+            </div>
+            <a class="primary-link compact" href="/products/create">Add product</a>
+        </section>
+
+        <section class="metric-grid">
+            <article class="metric-card">
+                <span>Products</span>
+                <strong><%= products.length %></strong>
+            </article>
+            <article class="metric-card">
+                <span>Users</span>
+                <strong><%= users.length %></strong>
+            </article>
+            <article class="metric-card">
+                <span>Orders</span>
+                <strong><%= users.reduce((sum, item) => sum + ((item.orders || []).length), 0) %></strong>
+            </article>
+        </section>
+
+        <section class="admin-table">
+            <div class="section-heading">
+                <p class="eyebrow">Catalog</p>
+                <h2>Products</h2>
+            </div>
+            <% if (!products.length) { %>
+                <div class="empty-state">
+                    <h2>No products yet</h2>
+                    <p>Add the first product to replace sample storefront items.</p>
+                </div>
+            <% } %>
+            <% products.forEach(function(product) { %>
+                <article class="admin-row">
+                    <img src="<%= product.image || 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=600&q=80' %>" alt="<%= product.name %>">
+                    <div>
+                        <h3><%= product.name %></h3>
+                        <p>Price: Rs <%= Number(product.price || 0).toLocaleString('en-IN') %> | Discount: Rs <%= Number(product.discount || 0).toLocaleString('en-IN') %></p>
+                    </div>
+                    <div class="row-actions">
+                        <a class="secondary-link" href="/products/<%= product._id %>/edit">Edit</a>
+                        <form action="/products/<%= product._id %>/delete" method="post">
+                            <button class="danger-button" type="submit">Delete</button>
+                        </form>
+                    </div>
+                </article>
+            <% }) %>
+        </section>
+    </main>
+</body>
+</html>

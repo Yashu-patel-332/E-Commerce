@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart | Cartora</title>
+    <link rel="stylesheet" href="/stylesheets/style.css">
+</head>
+<body>
+    <header class="market-header">
+        <a class="brand" href="/shop">Cartora</a>
+        <form class="search-bar" action="/shop" method="get">
+            <input type="search" placeholder="Search products" aria-label="Search products">
+            <button type="submit">Search</button>
+        </form>
+        <nav>
+            <a href="/dashboard">Dashboard</a>
+            <a href="/shop">Shop</a>
+            <a href="/users/logout">Logout</a>
+        </nav>
+    </header>
+
+    <main class="cart-shell">
+        <section class="cart-list">
+            <p class="eyebrow"><%= user.fullname || 'Your' %> cart</p>
+            <h1>Review your cart</h1>
+
+            <% if (!products.length) { %>
+                <div class="empty-state">
+                    <h2>Your cart is empty</h2>
+                    <p>Add products from the shop to see them here.</p>
+                    <a class="primary-link compact" href="/shop">Shop now</a>
+                </div>
+            <% } %>
+
+            <% products.forEach(function(product) { 
+                const finalPrice = Math.max((product.price || 0) - (product.discount || 0), 0);
+            %>
+                <article class="cart-item">
+                    <img src="<%= product.image || 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=600&q=80' %>" alt="<%= product.name %>">
+                    <div>
+                        <h2><%= product.name %></h2>
+                        <p>Discount applied: Rs <%= Number(product.discount || 0).toLocaleString('en-IN') %></p>
+                    </div>
+                    <strong>Rs <%= finalPrice.toLocaleString('en-IN') %></strong>
+                </article>
+            <% }) %>
+        </section>
+
+        <aside class="summary-panel">
+            <p class="eyebrow">Summary</p>
+            <div class="summary-line">
+                <span>Subtotal</span>
+                <strong>Rs <%= total.toLocaleString('en-IN') %></strong>
+            </div>
+            <div class="summary-line">
+                <span>Delivery</span>
+                <strong>Free</strong>
+            </div>
+            <div class="summary-total">
+                <span>Total</span>
+                <strong>Rs <%= total.toLocaleString('en-IN') %></strong>
+            </div>
+            <a class="primary-link full" href="/checkout">Checkout</a>
+        </aside>
+    </main>
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Placed | Cartora</title>
+    <link rel="stylesheet" href="/stylesheets/style.css">
+</head>
+<body>
+    <header class="market-header">
+        <a class="brand" href="/dashboard">Cartora</a>
+        <form class="search-bar" action="/shop" method="get">
+            <input type="search" placeholder="Search products" aria-label="Search products">
+            <button type="submit">Search</button>
+        </form>
+        <nav>
+            <a href="/dashboard">Dashboard</a>
+            <a href="/shop">Shop</a>
+            <a href="/cart">Cart</a>
+            <a href="/users/logout">Logout</a>
+        </nav>
+    </header>
+
+    <main class="success-shell">
+        <section class="success-card">
+            <div class="success-icon">✓</div>
+            <p class="eyebrow">Payment successful</p>
+            <h1>Successfully order place ho gaya hai.</h1>
+            <p>Your order has been placed and saved in your account.</p>
+            <div class="success-actions">
+                <a class="primary-link compact" href="/dashboard">Go to dashboard</a>
+                <a class="secondary-link rounded" href="/shop">Continue shopping</a>
+            </div>
+        </section>
+    </main>
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= product ? 'Edit Product' : 'Add Product' %> | Cartora</title>
+    <link rel="stylesheet" href="/stylesheets/style.css">
+</head>
+<body>
+    <header class="market-header">
+        <a class="brand" href="/dashboard">Cartora</a>
+        <form class="search-bar" action="/shop" method="get">
+            <input type="search" placeholder="Search products" aria-label="Search products">
+            <button type="submit">Search</button>
+        </form>
+        <nav>
+            <a href="/dashboard">Admin</a>
+            <a href="/shop">Shop</a>
+            <a href="/users/logout">Logout</a>
+        </nav>
+    </header>
+
+    <main class="product-form-shell">
+        <form class="form-card product-form" action="<%= product ? '/products/' + product._id + '/update' : '/products/create' %>" method="post">
+            <div>
+                <p class="eyebrow">Catalog</p>
+                <h1><%= product ? 'Edit product' : 'Add product' %></h1>
+            </div>
+            <% if (error) { %>
+                <div class="alert alert-error"><%= error %></div>
+            <% } %>
+            <label>
+                Product name
+                <input type="text" name="name" value="<%= product ? product.name : '' %>" placeholder="Leather crossbody bag" required>
+            </label>
+            <div class="two-column">
+                <label>
+                    Price
+                    <input type="number" name="price" value="<%= product ? product.price : '' %>" placeholder="2499" min="0" required>
+                </label>
+                <label>
+                    Discount
+                    <input type="number" name="discount" placeholder="200" min="0" value="<%= product ? product.discount : 0 %>">
+                </label>
+            </div>
+            <label>
+                Image URL
+                <input type="url" name="image" value="<%= product ? product.image : '' %>" placeholder="https://images.unsplash.com/...">
+            </label>
+            <div class="three-column">
+                <label>
+                    Card color
+                    <input type="color" name="bgcolor" value="<%= product ? product.bgcolor : '#f1f5f9' %>">
+                </label>
+                <label>
+                    Panel color
+                    <input type="color" name="panecolor" value="<%= product ? product.panecolor : '#184f43' %>">
+                </label>
+                <label>
+                    Text color
+                    <input type="color" name="textcolor" value="<%= product ? product.textcolor : '#ffffff' %>">
+                </label>
+            </div>
+            <button type="submit"><%= product ? 'Update product' : 'Create product' %></button>
+        </form>
+    </main>
+</body>
+</html>

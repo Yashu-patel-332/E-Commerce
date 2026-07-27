@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout | Cartora</title>
+    <link rel="stylesheet" href="/stylesheets/style.css">
+</head>
+<body>
+    <header class="market-header">
+        <a class="brand" href="/shop">Cartora</a>
+        <form class="search-bar" action="/shop" method="get">
+            <input type="search" placeholder="Search products" aria-label="Search products">
+            <button type="submit">Search</button>
+        </form>
+        <nav>
+            <a href="/dashboard">Dashboard</a>
+            <a href="/shop">Shop</a>
+            <a href="/cart">Cart</a>
+            <a href="/users/logout">Logout</a>
+        </nav>
+    </header>
+
+    <main class="checkout-shell">
+        <% if (!products.length) { %>
+            <section class="empty-state checkout-state">
+                <p class="eyebrow">Checkout</p>
+                <h1>Your cart is empty.</h1>
+                <p>Add products before placing an order.</p>
+                <a class="primary-link compact" href="/shop">Back to shop</a>
+            </section>
+        <% } else { %>
+            <form class="checkout-grid" action="/checkout/place-order" method="post">
+                <section class="checkout-steps">
+                    <div class="checkout-step">
+                        <span>1</span>
+                        <div>
+                            <h2>Delivery address</h2>
+                            <div class="two-column">
+                                <label>
+                                    Full name
+                                    <input type="text" name="fullname" value="<%= user.fullname || '' %>" required>
+                                </label>
+                                <label>
+                                    Phone
+                                    <input type="tel" name="phone" placeholder="9876543210" required>
+                                </label>
+                            </div>
+                            <label>
+                                Address
+                                <input type="text" name="address" placeholder="House number, street, area" required>
+                            </label>
+                            <div class="two-column">
+                                <label>
+                                    City
+                                    <input type="text" name="city" placeholder="Mumbai" required>
+                                </label>
+                                <label>
+                                    Pincode
+                                    <input type="text" name="pincode" placeholder="400001" required>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="checkout-step">
+                        <span>2</span>
+                        <div>
+                            <h2>Payment method</h2>
+                            <div class="payment-options">
+                                <label class="radio-card">
+                                    <input type="radio" name="paymentMethod" value="upi" required>
+                                    UPI
+                                </label>
+                                <label class="radio-card">
+                                    <input type="radio" name="paymentMethod" value="card" required>
+                                    Credit/Debit card
+                                </label>
+                                <label class="radio-card">
+                                    <input type="radio" name="paymentMethod" value="cod" required>
+                                    Cash on delivery
+                                </label>
+                            </div>
+                            <p class="payment-note">This is a demo order flow. Real payment capture needs Razorpay or Stripe keys.</p>
+                        </div>
+                    </div>
+
+                    <div class="checkout-step">
+                        <span>3</span>
+                        <div>
+                            <h2>Review items</h2>
+                            <% products.forEach(function(product) {
+                                const finalPrice = Math.max((product.price || 0) - (product.discount || 0), 0);
+                            %>
+                                <article class="mini-item">
+                                    <img src="<%= product.image || 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=600&q=80' %>" alt="<%= product.name %>">
+                                    <span><%= product.name %></span>
+                                    <strong>Rs <%= finalPrice.toLocaleString('en-IN') %></strong>
+                                </article>
+                            <% }) %>
+                        </div>
+                    </div>
+                </section>
+
+                <aside class="summary-panel">
+                    <p class="eyebrow">Order summary</p>
+                    <div class="summary-line">
+                        <span>Subtotal</span>
+                        <strong>Rs <%= subtotal.toLocaleString('en-IN') %></strong>
+                    </div>
+                    <div class="summary-line">
+                        <span>Delivery</span>
+                        <strong><%= delivery ? 'Rs ' + delivery.toLocaleString('en-IN') : 'Free' %></strong>
+                    </div>
+                    <div class="summary-total">
+                        <span>Payable</span>
+                        <strong>Rs <%= total.toLocaleString('en-IN') %></strong>
+                    </div>
+                    <button type="submit">Place your order</button>
+                </aside>
+            </form>
+        <% } %>
+    </main>
+</body>
+</html>
