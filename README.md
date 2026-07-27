@@ -86,10 +86,6 @@ Or for development:
 npm run dev
 ```
 
-## 📸 Screenshots
-
-Add screenshots of your project here.
-
 ## 🤝 Contributing
 
 Contributions are welcome! Feel free to fork the repository and submit a pull request.
